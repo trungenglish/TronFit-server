@@ -10,7 +10,7 @@ body:
     attributes:
       label: Task Title
       description: Clear description of what needs to be done
-      placeholder: "Update dependencies to latest versions"
+      placeholder: "Implement JWT authentication middleware"
     validations:
       required: true
 
@@ -20,20 +20,22 @@ body:
       label: Task Type
       description: What kind of task is this?
       options:
-        - "🎨 UI/UX - Create components, layouts, styling"
-        - "🔌 Integration - API integration, third-party services"
+        - "🔌 API - REST/GraphQL endpoints, middleware"
+        - "🗄️ Database - Schema changes, migrations, queries"
+        - "🔐 Auth - Authentication, authorization, security"
         - "🐛 Fix - Non-critical bug fixes and improvements"
-        - "📱 Responsive - Mobile/tablet optimization"
         - "🔧 Maintenance - Code cleanup, refactoring"
-        - "⚡ Performance - Optimization work"
-        - "🧪 Testing - Add/improve tests"
-        - "📚 Documentation - Update docs, README"
-        - "📦 Dependencies - Update libraries"
-        - "🔒 Security - Security improvements" 
-        - "🏗️ Infrastructure - DevOps, CI/CD"
-        - "♿ Accessibility - A11y improvements"
-        - "🌐 Localization - i18n, language support"
-        - "📊 Analytics - Tracking, monitoring setup"
+        - "⚡ Performance - Database optimization, caching"
+        - "🧪 Testing - Unit tests, integration tests"
+        - "📚 Documentation - API docs, README, comments"
+        - "📦 Dependencies - Update libraries, packages"
+        - "🔒 Security - Security audits, vulnerability fixes"
+        - "🏗️ Infrastructure - Docker, deployment, CI/CD"
+        - "📊 Monitoring - Logging, metrics, health checks"
+        - "🌐 Integration - Third-party services, webhooks"
+        - "📧 Messaging - Email, SMS, push notifications"
+        - "📁 File Management - Upload/download, storage"
+        - "⚙️ Configuration - Environment variables, settings"
       default: 0
     validations:
       required: true
@@ -44,10 +46,10 @@ body:
       label: Priority
       description: How urgent is this task?
       options:
-        - "🔥 Critical - Must do now"
-        - "⚡ High - Should do soon"
+        - "🔥 Critical - Security issue or system down"
+        - "⚡ High - Blocking other work or user-facing"
         - "📊 Medium - Normal priority"
-        - "📝 Low - When time permits"
+        - "📝 Low - Nice to have, when time permits"
       default: 2
     validations:
       required: true
@@ -58,8 +60,14 @@ body:
       label: Description
       description: Detailed description of the task
       placeholder: |
-        Current dependencies are 6 months old and have security vulnerabilities.
-        Need to update to latest stable versions and test compatibility.
+        Current authentication system uses basic auth which is not secure enough.
+        Need to implement JWT-based authentication with refresh tokens.
+        
+        Requirements:
+        - Support login/logout endpoints
+        - JWT tokens with 15min expiry
+        - Refresh tokens with 7 days expiry
+        - Middleware to protect routes
     validations:
       required: true
 
@@ -69,11 +77,15 @@ body:
       label: Task Breakdown
       description: List of specific tasks to complete
       placeholder: |
-        - [ ] Audit current dependencies
-        - [ ] Identify outdated packages
-        - [ ] Update package.json
-        - [ ] Run tests to ensure compatibility
-        - [ ] Update documentation if needed
+        - [ ] Design JWT token structure
+        - [ ] Create auth middleware
+        - [ ] Implement login endpoint
+        - [ ] Implement logout endpoint
+        - [ ] Add token refresh endpoint
+        - [ ] Update protected routes
+        - [ ] Write unit tests
+        - [ ] Update API documentation
+        - [ ] Test integration
     validations:
       required: true
 
@@ -85,18 +97,37 @@ body:
       options:
         - "⏱️ Small - Less than 4 hours"
         - "📅 Medium - 1-2 days"
-        - "📆 Large - 1+ weeks"
+        - "📆 Large - 3-5 days"
+        - "🗓️ Extra Large - 1+ weeks"
       default: 0
     validations:
       required: true
 
-  - type: checkboxes
-    id: checklist
+  - type: textarea
+    id: technical-notes
     attributes:
-      label: Checklist
+      label: Technical Notes
+      description: Technical considerations, architecture decisions, or dependencies
+      placeholder: |
+        - Database changes required: Yes/No
+        - Breaking changes: Yes/No
+        - External services affected: None
+        - Performance impact: Minimal
+        - Security considerations: High - involves authentication
+
+  - type: checkboxes
+    id: backend-checklist
+    attributes:
+      label: Backend Checklist
       description: Please confirm
       options:
-        - label: I have clearly defined the task
+        - label: I have clearly defined the task and requirements
           required: true
         - label: I have broken down the work into steps
           required: true
+        - label: I have considered database schema changes
+          required: false
+        - label: I have identified potential breaking changes
+          required: false
+        - label: I have considered security implications
+          required: false
