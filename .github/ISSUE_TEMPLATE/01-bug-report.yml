@@ -1,0 +1,109 @@
+name: 🐛 Bug Report
+description: Report a bug or issue
+title: "[BUG] "
+labels: ["type:bug", "status:ready"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Brief description of the bug
+      placeholder: "Login fails when using special characters in password"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How critical is this bug?
+      options:
+        - "🔥 Critical - Blocks production"
+        - "⚡ High - Important fix needed"
+        - "📊 Medium - Normal priority"
+        - "📝 Low - Minor issue"
+      default: 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Clear steps to reproduce the bug
+      placeholder: |
+        1. Go to login page
+        2. Enter email: user@test.com
+        3. Enter password with special chars: P@ssw0rd!
+        4. Click Login button
+        5. See error message
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen?
+      placeholder: "User should be logged in successfully"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happens?
+      placeholder: "Error message: 'Invalid credentials' appears"
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Where did this happen?
+      placeholder: "Production / Staging / Development"
+    validations:
+      required: true
+
+  - type: textarea
+    id: browser
+    attributes:
+      label: Browser/Device Info
+      description: Browser, OS, device details
+      placeholder: |
+        - Browser: Chrome 120.0.0.0
+        - OS: macOS 14.1
+        - Device: MacBook Pro M1
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots/Logs
+      description: Add screenshots, error logs, or console output
+      placeholder: "Drag and drop images or paste error logs here"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm
+      options:
+        - label: I have searched existing issues
+          required: true
+        - label: I have provided clear reproduction steps
+          required: true
+        - label: I have included relevant environment details
+          required: true

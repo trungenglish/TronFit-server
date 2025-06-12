@@ -1,0 +1,118 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[FEATURE] "
+labels: ["type:feature", "status:ready"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide detailed information below.
+
+  - type: input
+    id: feature-title
+    attributes:
+      label: Feature Title
+      description: Clear, concise feature name
+      placeholder: "Add PDF export functionality"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature?
+      options:
+        - "🔥 Critical - Business requirement"
+        - "⚡ High - Important for users"
+        - "📊 Medium - Nice to have"
+        - "📝 Low - Future enhancement"
+      default: 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this solve?
+      placeholder: "Users currently cannot export reports to PDF format, requiring manual conversion which is time-consuming..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should this feature work?
+      placeholder: |
+        Add an "Export as PDF" button on the reports page that:
+        1. Generates a formatted PDF of the current report
+        2. Includes company branding/logo
+        3. Preserves all charts and tables
+        4. Allows user to download immediately
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      description: How complex is this feature?
+      options:
+        - "⏱️ Small - Less than 4 hours"
+        - "📅 Medium - 1-2 days"
+        - "📆 Large - 1+ weeks"
+        - "🏗️ Epic - Multiple sprints"
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: When is this feature complete?
+      placeholder: |
+        - [ ] User can click "Export PDF" button on reports page
+        - [ ] PDF is generated with proper formatting
+        - [ ] PDF includes company logo and branding
+        - [ ] All charts and tables are preserved
+        - [ ] File downloads automatically
+        - [ ] Loading indicator shown during generation
+        - [ ] Error handling for failed exports
+    validations:
+      required: true
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups/Wireframes
+      description: Visual representation of the feature
+      placeholder: "Drag and drop mockups, wireframes, or reference images here"
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Other ways to solve this problem
+      placeholder: "We considered using third-party PDF services, but in-house solution provides better control..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm
+      options:
+        - label: I have searched existing feature requests
+          required: true
+        - label: I have clearly defined the problem
+          required: true
+        - label: I have provided detailed acceptance criteria
+          required: true

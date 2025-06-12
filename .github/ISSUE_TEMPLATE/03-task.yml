@@ -1,0 +1,102 @@
+name: 📋 Task
+description: General task, improvement, or maintenance
+title: "[TASK] "
+labels: ["type:task", "status:ready"]
+assignees: []
+
+body:
+  - type: input
+    id: task-title
+    attributes:
+      label: Task Title
+      description: Clear description of what needs to be done
+      placeholder: "Update dependencies to latest versions"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: Task Type
+      description: What kind of task is this?
+      options:
+        - "🎨 UI/UX - Create components, layouts, styling"
+        - "🔌 Integration - API integration, third-party services"
+        - "🐛 Fix - Non-critical bug fixes and improvements"
+        - "📱 Responsive - Mobile/tablet optimization"
+        - "🔧 Maintenance - Code cleanup, refactoring"
+        - "⚡ Performance - Optimization work"
+        - "🧪 Testing - Add/improve tests"
+        - "📚 Documentation - Update docs, README"
+        - "📦 Dependencies - Update libraries"
+        - "🔒 Security - Security improvements" 
+        - "🏗️ Infrastructure - DevOps, CI/CD"
+        - "♿ Accessibility - A11y improvements"
+        - "🌐 Localization - i18n, language support"
+        - "📊 Analytics - Tracking, monitoring setup"
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this task?
+      options:
+        - "🔥 Critical - Must do now"
+        - "⚡ High - Should do soon"
+        - "📊 Medium - Normal priority"
+        - "📝 Low - When time permits"
+      default: 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of the task
+      placeholder: |
+        Current dependencies are 6 months old and have security vulnerabilities.
+        Need to update to latest stable versions and test compatibility.
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Task Breakdown
+      description: List of specific tasks to complete
+      placeholder: |
+        - [ ] Audit current dependencies
+        - [ ] Identify outdated packages
+        - [ ] Update package.json
+        - [ ] Run tests to ensure compatibility
+        - [ ] Update documentation if needed
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      description: How much work is this?
+      options:
+        - "⏱️ Small - Less than 4 hours"
+        - "📅 Medium - 1-2 days"
+        - "📆 Large - 1+ weeks"
+      default: 0
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm
+      options:
+        - label: I have clearly defined the task
+          required: true
+        - label: I have broken down the work into steps
+          required: true

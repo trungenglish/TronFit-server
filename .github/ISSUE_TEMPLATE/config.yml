@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 General Discussion
+    url: https://github.com/trungenglish/TronFit-web/discussions/categories/general
+    about: Discuss ideas with the community
+  - name: 🙏 Q&A
+    url: https://github.com/trungenglish/TronFit-web/discussions/categories/q-a
+    about: Ask questions
+  - name: 💡Ideas
+    url: https://github.com/trungenglish/TronFit-web/discussions/categories/ideas
+    about: New feature ideas and suggestions
+  - name: 📞 Support
+    url: https://support.yourcompany.com
+    about: Get help with using our product
