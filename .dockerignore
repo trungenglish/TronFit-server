@@ -1,0 +1,45 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# Next.js build outputs
+.next
+out
+dist
+build
+
+# Testing
+coverage
+.nyc_output
+test-results
+
+# Development
+.git
+.github
+.husky
+.vscode
+.idea
+*.log
+*.md
+!README.md
+
+# Environment & Configuration
+.env
+.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Docker related
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Miscellaneous
+.DS_Store
+*.swp
+*.tgz
+.npmrc

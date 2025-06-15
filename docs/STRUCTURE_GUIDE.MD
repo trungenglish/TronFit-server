@@ -1,4 +1,10 @@
-# HƯỚNG DẪN CẤU TRÚC NESTJS CHI TIẾT
+# HƯỚNG DẪN CẤU TRÚC 
+
+![NestJS Structure Diagram](../assets/structure_guide_1.png)
+![NestJS Structure Diagram](../assets/structure_guide_2.png)
+![NestJS Structure Diagram](../assets/structure_guide_3.png)
+![NestJS Structure Diagram](../assets/structure_guide_4.png)
+![NestJS Structure Diagram](../assets/structure_guide_5.png)
 
 ## 1. KHÁI NIỆM CƠ BAN
 
