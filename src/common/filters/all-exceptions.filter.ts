@@ -32,7 +32,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     };
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
-    // Thêm log nếu cần (ví dụ: sử dụng logger như Winston)
+    // Thêm logger nếu cần (ví dụ: sử dụng logger như Winston)
     console.error('Exception:', exception);
   }
 }

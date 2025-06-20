@@ -949,10 +949,10 @@ export namespace Prisma {
      * @example
      * ```
      * // Defaults to stdout
-     * log: ['query', 'info', 'warn', 'error']
+     * logger: ['query', 'info', 'warn', 'error']
      * 
      * // Emit as events
-     * log: [
+     * logger: [
      *   { emit: 'stdout', level: 'query' },
      *   { emit: 'stdout', level: 'info' },
      *   { emit: 'stdout', level: 'warn' }

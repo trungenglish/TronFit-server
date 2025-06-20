@@ -2535,10 +2535,10 @@ export declare type PrismaClientOptions = {
      * @example
      * \`\`\`
      * // Defaults to stdout
-     * log: ['query', 'info', 'warn']
+     * logger: ['query', 'info', 'warn']
      *
      * // Emit as events
-     * log: [
+     * logger: [
      *  { emit: 'stdout', level: 'query' },
      *  { emit: 'stdout', level: 'info' },
      *  { emit: 'stdout', level: 'warn' }
