@@ -5,7 +5,7 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ValidationPipe } from './common/pipes/validation.pipe';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { WinstonModule } from 'nest-winston';
-import winston from 'winston';
+import * as winston from 'winston';
 import * as path from 'path';
 
 @Module({

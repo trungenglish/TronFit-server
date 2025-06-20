@@ -5,15 +5,17 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { ExpressAdapter } from '@nestjs/platform-express';
+import { HttpAdapterHost } from '@nestjs/core';
+import { Request } from 'express';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: ExpressAdapter) {}
+  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
   catch(exception: unknown, host: ArgumentsHost): void {
-    const httpAdapter = this.httpAdapterHost;
+    const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
+    const request = ctx.getRequest<Request>();
 
     const httpStatus =
       exception instanceof HttpException
@@ -23,7 +25,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const responseBody = {
       statusCode: httpStatus,
       timestamp: new Date().toISOString(),
-      path: httpAdapter.getRequestUrl(ctx.getRequest()),
+      path: request.url,
       message:
         exception instanceof HttpException
           ? exception.message
@@ -32,7 +34,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     };
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
-    // Thêm logger nếu cần (ví dụ: sử dụng logger như Winston)
     console.error('Exception:', exception);
   }
 }
