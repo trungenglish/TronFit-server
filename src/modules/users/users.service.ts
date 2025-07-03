@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+// import { CreateUserDto } from './dto/create-user.dto';
+// import { UpdateUserDto } from './dto/update-user.dto';
+import { PrismaService } from '../../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+
+export type UserWithAuthProviders = Prisma.UserGetPayload<{
+  include: { authProviders: true };
+}>;
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+  constructor(private prisma: PrismaService) {}
 
-  findAll() {
+  // createUserToRole(createUserDto: CreateUserDto) {
+
+  //   return 'This action adds a new user';
+  // }
+
+  findAllUser() {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findUserByEmail(email: string): Promise<UserWithAuthProviders | null> {
+    return this.prisma.user.findUnique({
+      where: { email },
+      include: {
+        authProviders: true,
+      },
+    });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findAdminByUsername(
+    username: string,
+  ): Promise<UserWithAuthProviders | null> {
+    return this.prisma.user.findUnique({
+      where: { username },
+      include: {
+        authProviders: true,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
+  //
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 }

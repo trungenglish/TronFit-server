@@ -3,10 +3,11 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// when you change this file, run `npx prisma format` to format it, and `npx prisma generate` to regenerate the Prisma Client
+// update database with `npx prisma db push` or `npx prisma migrate dev`
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -26,6 +27,7 @@ enum UserRole {
 
 enum Provider {
   EMAIL
+  USERNAME
   GOOGLE
   APPLE
   GITHUB
@@ -33,43 +35,50 @@ enum Provider {
 
 // === Models ===
 model UserProfile {
-  id       String  @id @default(uuid())
-  userId   String  @unique @map("user_id")
-  firstName     String? @map("first_name")
-  lastName      String? @map("last_name")
-  nickName      String? @map("nick_name")
+  id        String    @id @default(uuid())
+  userId    String    @unique @map("user_id")
+  firstName String?   @map("first_name")
+  lastName  String?   @map("last_name")
+  fullName  String?   @map("full_name")
+  nickName  String?   @map("nick_name")
   birthday  DateTime? @map("birth_date")
-  age      Int?
-  gender   String?
-  height   Decimal?
-  weight   Decimal?
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  age       Int?
+  gender    String?
+  height    Decimal?
+  weight    Decimal?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
 
   @@map("user_profiles")
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  role          UserRole @default(USER)
-  emailVerified Boolean  @default(false) @map("email_verified")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  id            String         @id @default(uuid())
+  email         String         @unique
+  username      String?        @unique
+  nickname      String?        @unique @map("nick_name")
+  role          UserRole       @default(USER)
+  emailVerified Boolean        @default(false) @map("email_verified")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
   profile       UserProfile?
-  authProviders  AuthProvider[]
+  authProviders AuthProvider[]
 
   @@map("users")
 }
 
 model AuthProvider {
-  id        String   @id @default(uuid())
-  userId    String   @unique @map("user_id")
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  provider  String
-  providerUserId String @map("provider_user_id")
-  password String?
-  accessToken String? @map("access_token")
-  refreshToken String? @map("refresh_token")
+  id             String   @id @default(uuid())
+  userId         String   @unique @map("user_id")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider       String
+  providerUserId String?  @map("provider_user_id")
+  password       String?
+  accessToken    String?  @map("access_token")
+  refreshToken   String?  @map("refresh_token")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   @@map("auth_providers")
 }

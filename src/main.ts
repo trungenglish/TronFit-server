@@ -7,7 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(helmet());
   app.enableCors();
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3001);
+  console.log(
+    'Application started successfully on port',
+    process.env.PORT ?? 3001,
+  );
 }
 bootstrap().catch((err) => {
   console.error('Failed to start application', err);
