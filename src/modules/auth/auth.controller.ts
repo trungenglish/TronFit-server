@@ -1,11 +1,10 @@
 import { Controller, UseGuards, Post, Request, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalEmailAuthGuard } from './guard/local-auth.guard';
-// import { Request as ExpressRequest } from 'express';
-// import { UserWithAuthProviders } from '../users/users.service';
-// import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { Public } from '../../common/decorators/customize.decorator';
+import { Public } from '../../common/decorators/public-route.decorator';
+import { AuthRequest } from './interfaces';
+import { ResponseMessage } from '../../common/decorators/response-message.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -13,9 +12,10 @@ export class AuthController {
 
   @Public()
   @UseGuards(LocalEmailAuthGuard)
+  @ResponseMessage('Login by email')
   @Post('login')
-  login(@Request() req) {
-    return this.authService.login(req.user);
+  loginUser(@Request() req: AuthRequest) {
+    return this.authService.loginUser(req.user);
   }
 
   @Post('register')

@@ -369,7 +369,7 @@ async create(userData: CreateUserDto): Promise<User> {
 
 ### Bước 8: Đi qua Interceptors
 ```typescript
-// transform.interceptor.ts
+// response.interceptor.ts
 return {
   success: true,
   message: '✅ Tạo user thành công',

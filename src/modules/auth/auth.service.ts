@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { UsersService, UserWithAuthProviders } from '../users/users.service';
+import { Inject, Injectable } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
+import { UserWithAuthProviders } from '../users/types';
+import { jwtConfig } from '../../config/jwt.config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    @Inject(jwtConfig.KEY) private jwtConf: any,
     private prisma: PrismaService,
   ) {}
 
@@ -18,7 +21,6 @@ export class AuthService {
     pass: string,
   ): Promise<UserWithAuthProviders | null> {
     const user = await this.usersService.findUserByEmail(email);
-    console.log('user', user);
     if (user && user.authProviders.length > 0) {
       const authProvider = user.authProviders[0];
       if (authProvider.password) {
@@ -31,11 +33,47 @@ export class AuthService {
     return null;
   }
 
-  login(user: any) {
-    console.log(user);
-    const payload = { username: user.email, sub: user.id };
+  loginUser(user: UserWithAuthProviders) {
+    const { id, email, role, nickname } = user;
+    const payload = {
+      sub: 'token login',
+      iss: 'from server',
+      id,
+      email,
+      nickname,
+      role,
+    };
+
     return {
       access_token: this.jwtService.sign(payload),
+      user: {
+        id,
+        email,
+        nickname,
+        role,
+      },
+    };
+  }
+
+  loginAdmin(user: UserWithAuthProviders) {
+    const { id, username, role, nickname } = user;
+    const payload = {
+      sub: 'token login',
+      iss: 'from server',
+      id,
+      username,
+      nickname,
+      role,
+    };
+
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: {
+        id,
+        username,
+        nickname,
+        role,
+      },
     };
   }
 
