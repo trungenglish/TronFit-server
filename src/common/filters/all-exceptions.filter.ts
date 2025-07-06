@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Request } from 'express';
+import { getVietNamTime } from '../utils/time.util';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -24,7 +25,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const responseBody = {
       statusCode: httpStatus,
-      timestamp: new Date().toISOString(),
+      timestamp: getVietNamTime(),
       path: request.url,
       message:
         exception instanceof HttpException
