@@ -75,7 +75,6 @@ model AuthProvider {
   provider       String
   providerUserId String?  @map("provider_user_id")
   password       String?
-  accessToken    String?  @map("access_token")
   refreshToken   String?  @map("refresh_token")
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")

@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserWithAuthProviders } from '../users/types';
 import { jwtConfig } from '../../config/jwt.config';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     private jwtService: JwtService,
     @Inject(jwtConfig.KEY) private jwtConf: any,
     private prisma: PrismaService,
+    private configService: ConfigService,
   ) {}
 
   async validateUser(
@@ -43,9 +45,11 @@ export class AuthService {
       nickname,
       role,
     };
+    const refresh_token = this.createRefreshToken(payload);
 
     return {
       access_token: this.jwtService.sign(payload),
+      refresh_token,
       user: {
         id,
         email,
@@ -65,9 +69,11 @@ export class AuthService {
       nickname,
       role,
     };
+    const refresh_token = this.createRefreshToken(payload);
 
     return {
       access_token: this.jwtService.sign(payload),
+      refresh_token,
       user: {
         id,
         username,
@@ -100,5 +106,13 @@ export class AuthService {
 
   isValidPassword(password: string, hashedPassword: string): boolean {
     return bcrypt.compareSync(password, hashedPassword);
+  }
+
+  createRefreshToken(payload: any) {
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRE'),
+    });
+    return refreshToken;
   }
 }
