@@ -37,6 +37,17 @@ export class UsersService {
     });
   }
 
+  async updateUserToken(refreshToken: string, userId: string) {
+    return this.prisma.authProvider.update({
+      where: {
+        userId: userId,
+      },
+      data: {
+        refreshToken: refreshToken,
+      },
+    });
+  }
+
   // update(id: number, updateUserDto: UpdateUserDto) {
   //   return `This action updates a #${id} user`;
   // }

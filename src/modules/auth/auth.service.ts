@@ -7,6 +7,8 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { UserWithAuthProviders } from '../users/types';
 import { jwtConfig } from '../../config/jwt.config';
 import { ConfigService } from '@nestjs/config';
+import { Response } from 'express';
+import ms from 'ms';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +37,7 @@ export class AuthService {
     return null;
   }
 
-  loginUser(user: UserWithAuthProviders) {
+  async loginUser(user: UserWithAuthProviders, response: Response) {
     const { id, email, role, nickname } = user;
     const payload = {
       sub: 'token login',
@@ -47,9 +49,19 @@ export class AuthService {
     };
     const refresh_token = this.createRefreshToken(payload);
 
+    await this.usersService.updateUserToken(refresh_token, id);
+
+    response.cookie('refresh_token', refresh_token, {
+      httpOnly: true,
+      maxAge: ms(
+        (this.configService.get<string>(
+          'JWT_REFRESH_EXPIRE',
+        ) as ms.StringValue) || '1d',
+      ),
+    });
+
     return {
       access_token: this.jwtService.sign(payload),
-      refresh_token,
       user: {
         id,
         email,
@@ -59,7 +71,7 @@ export class AuthService {
     };
   }
 
-  loginAdmin(user: UserWithAuthProviders) {
+  async loginAdmin(user: UserWithAuthProviders) {
     const { id, username, role, nickname } = user;
     const payload = {
       sub: 'token login',
@@ -70,6 +82,7 @@ export class AuthService {
       role,
     };
     const refresh_token = this.createRefreshToken(payload);
+    await this.usersService.updateUserToken(refresh_token, id);
 
     return {
       access_token: this.jwtService.sign(payload),
@@ -109,10 +122,9 @@ export class AuthService {
   }
 
   createRefreshToken(payload: any) {
-    const refreshToken = this.jwtService.sign(payload, {
+    return this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
       expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRE'),
     });
-    return refreshToken;
   }
 }
